@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --muted: #595959;
+  --subtle: #767676;
+  --border: #e7e7e7;
+  --surface: #f5f5f4;
+  --ink: #0d0d0e;
+  --coral: #c2502f;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-coral: var(--coral);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+  }
+
+  ::selection {
+    background: var(--foreground);
+    color: var(--background);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--coral);
+    outline-offset: 3px;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Hero, modelled on adhamdannaway.com. HeroSplit.tsx eases two variables:
+   --x      pointer position over the hero, 0 (far left) to 1 (far right)
+   --shift  how far the portrait follows the pointer, in px
+   Moving towards a side reveals more of it and fades out the opposite side.
+--------------------------------------------------------------------------- */
+.hero-split {
+  --x: 0.5;
+  --shift: 0px;
+  /* Share of the portrait shown as the designer half: 0.19 to 0.81. */
+  --split: calc(0.5 + (0.5 - var(--x)) * 0.62);
+}
+
+.hero-art {
+  transform: translateX(var(--shift));
+}
+
+.hero-designer-layer {
+  clip-path: inset(0 calc((1 - var(--split)) * 100%) 0 0);
+}
+
+/* Overlaps the designer half by 2px so no seam shows at the split. */
+.hero-coder-layer {
+  clip-path: inset(0 0 0 calc(var(--split) * 100% - 2px));
+}
+
+.hero-designer-text,
+.hero-designer-bg {
+  opacity: clamp(0, calc(2 - 2 * var(--x)), 1);
+}
+
+.hero-coder-text,
+.hero-coder-bg {
+  opacity: clamp(0, calc(2 * var(--x)), 1);
+}
+
+/* Backgrounds move half as much as the portrait, for a little depth. */
+.hero-designer-bg {
+  transform: translateX(calc(var(--shift) * -0.5));
+}
+
+.hero-coder-bg {
+  transform: translateX(calc(var(--shift) * 0.5));
+}
+
+/* ---------------------------------------------------------------------------
+   Motion
+--------------------------------------------------------------------------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes drift {
+  to {
+    transform: translateY(-72px);
+  }
+}
+
+@keyframes enter-left {
+  from {
+    opacity: 0;
+    translate: calc(-1 * min(500px, 45vw)) 0;
+  }
+}
+
+@keyframes enter-right {
+  from {
+    opacity: 0;
+    translate: min(500px, 45vw) 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Page load, as on the reference: the two halves slide in from opposite sides and
+     meet in the middle, the backgrounds follow with a slight overshoot, then the copy fades in. */
+  html[data-js] .hero-split:not([data-ready]) :is(.hero-enter-left, .hero-enter-right, .hero-enter-left-back, .hero-enter-right-back, .hero-enter-text) {
+    opacity: 0;
+  }
+
+  .hero-split[data-ready] .hero-enter-left {
+    animation: enter-left 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hero-split[data-ready] .hero-enter-right {
+    animation: enter-right 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .hero-split[data-ready] .hero-enter-left-back {
+    animation: enter-left 1.5s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  }
+
+  .hero-split[data-ready] .hero-enter-right-back {
+    animation: enter-right 1.5s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  }
+
+  .hero-split[data-ready] .hero-enter-text {
+    animation: fade 0.6s ease-out 1.1s both;
+  }
+
+  /* Scroll reveal (see ScrollReveal.tsx): hidden until the element enters the viewport. */
+  html[data-js] [data-reveal] {
+    opacity: 0;
+  }
+
+  html[data-js] [data-reveal][data-revealed] {
+    animation: rise 0.9s var(--ease-out) var(--reveal-delay, 0ms) both;
+  }
+
+  html[data-js] [data-revealed] .reveal-settle {
+    animation: settle 1.6s var(--ease-out) var(--reveal-delay, 0ms) both;
+  }
+
+  html[data-js] [data-revealed] .reveal-grow {
+    animation: grow 1.2s var(--ease-out) calc(var(--reveal-delay, 0ms) + 150ms) both;
+  }
+
+  /* Decorative code in the hero drifts up slightly while scrolling. */
+  @supports (animation-timeline: scroll()) {
+    .parallax-drift {
+      animation: drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 640px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
