@@ -32,7 +32,7 @@ export const disciplines = [
     text: "I design interfaces that are simple to use and pleasant to look at, with clear hierarchy and consistent details.",
     groups: [
       { label: "What I design", items: ["Websites", "Web apps", "UI/UX", "Prototypes"] },
-      { label: "Tools", items: ["Figma"] },
+      { label: "Tools", items: ["Figma", "Canva"] },
     ],
   },
   {
