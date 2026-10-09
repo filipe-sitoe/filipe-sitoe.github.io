@@ -2,12 +2,12 @@
   "name": "filipesitoe",
   "version": "1.0.0",
   "private": true,
-  "description": "Personal portfolio of Filipe Sitoe — Full Stack Developer",
+  "description": "Personal portfolio of Filipe Sitoe, Designer & Full Stack Developer",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "preview": "next build && next start",
+    "start": "npx --yes serve out",
+    "preview": "next build && npx --yes serve out",
     "lint": "eslint"
   },
   "dependencies": {

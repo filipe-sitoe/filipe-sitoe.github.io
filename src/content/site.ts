@@ -9,7 +9,7 @@ export const site = {
   whatsapp: "https://wa.me/258846238801",
   linkedin: "https://www.linkedin.com/in/filipe-sitoe/",
   /** PDF in the public/ folder, opened in a new tab. */
-  cv: "/cv/Filipe-Sitoe-CV.pdf",
+  cv: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/cv/Filipe-Sitoe-CV.pdf`,
 };
 
 export const hero = {

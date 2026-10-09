@@ -14,9 +14,9 @@ npm run dev      # http://localhost:3000
 ```
 
 ```bash
-npm run preview  # build and serve the production version (fastest way to just view the site)
-npm run build    # production build
-npm run start    # serve the production build
+npm run preview  # build and serve the static site (fastest way to just view it)
+npm run build    # static export to the out/ folder
+npm run start    # serve the out/ folder
 npm run lint     # ESLint
 ```
 
@@ -46,5 +46,10 @@ Elements marked with `data-reveal` rise in the first time they scroll into view 
 
 ## Deployment
 
-Import the repository on [Vercel](https://vercel.com/new); no extra configuration is needed.
-Once you have a custom domain, set `NEXT_PUBLIC_SITE_URL` (e.g. `https://filipesitoe.com`) so the canonical URL, social previews and `sitemap.xml` use it.
+The site is a static export published on GitHub Pages by `.github/workflows/deploy.yml` on every push to `main`.
+
+1. Name the repository `<username>.github.io` (for example `filipesitoe.github.io`) so the site is served at the root of that address.
+2. In the repository, open **Settings → Pages** and set **Source** to **GitHub Actions**.
+3. Push to `main`. The workflow builds the site and publishes it; progress shows in the **Actions** tab.
+
+The workflow fills in the site URL and base path automatically. If you later add a custom domain, set it in **Settings → Pages → Custom domain**.
