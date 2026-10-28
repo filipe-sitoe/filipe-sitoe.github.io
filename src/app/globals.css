@@ -47,17 +47,21 @@
     outline-offset: 3px;
   }
 
-  /* Page scrollbar: dark like the header and footer, coral on hover. Chrome ignores
-     ::-webkit-scrollbar once scrollbar-color is set, so that is left to Firefox. */
+  /* Page scrollbar: a slim, low-contrast thumb on the same dark as the header and footer.
+     Chrome ignores ::-webkit-scrollbar once scrollbar-color is set, so that is left to Firefox. */
+  html {
+    --scrollbar-thumb: color-mix(in srgb, white 14%, var(--ink));
+  }
+
   @supports not selector(::-webkit-scrollbar) {
     html {
-      scrollbar-color: color-mix(in srgb, white 22%, var(--ink)) var(--ink);
+      scrollbar-color: var(--scrollbar-thumb) var(--ink);
       scrollbar-width: thin;
     }
   }
 
   html::-webkit-scrollbar {
-    width: 12px;
+    width: 10px;
   }
 
   html::-webkit-scrollbar-track {
@@ -65,14 +69,14 @@
   }
 
   html::-webkit-scrollbar-thumb {
-    background: color-mix(in srgb, white 22%, var(--ink));
+    background: var(--scrollbar-thumb);
     border: 3px solid var(--ink);
     border-radius: 999px;
   }
 
   html::-webkit-scrollbar-thumb:hover,
   html::-webkit-scrollbar-thumb:active {
-    background: var(--coral);
+    background: color-mix(in srgb, white 30%, var(--ink));
   }
 }
 
