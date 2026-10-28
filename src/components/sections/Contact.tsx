@@ -9,8 +9,14 @@ const links = [
 ];
 
 export function Contact() {
+  // On phones the section fills the screen below the 4rem header, so at the bottom of the
+  // page only the dark section and the footer are visible. lvh: the browser bar is hidden there.
   return (
-    <section id="contact" aria-labelledby="contact-title" className="scroll-mt-16 bg-ink text-white">
+    <section
+      id="contact"
+      aria-labelledby="contact-title"
+      className="scroll-mt-16 bg-ink text-white max-md:flex max-md:min-h-[calc(100lvh-4rem)] max-md:flex-col max-md:justify-center"
+    >
       <Container className="py-24 text-center lg:py-32">
         <h2
           id="contact-title"
