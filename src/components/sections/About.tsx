@@ -50,15 +50,7 @@ export function About() {
                 {otherSkills.groups.map((group) => (
                   <div key={group.label}>
                     <dt className="text-sm text-subtle">{group.label}</dt>
-                    <dd className="mt-2.5">
-                      <ul className="flex flex-wrap gap-2.5">
-                        {group.items.map((skill) => (
-                          <li key={skill} className="rounded-full border border-border px-4 py-2 text-[15px]">
-                            {skill}
-                          </li>
-                        ))}
-                      </ul>
-                    </dd>
+                    <dd className="mt-2 text-[15px] leading-relaxed">{group.items.join(", ")}</dd>
                   </div>
                 ))}
               </dl>

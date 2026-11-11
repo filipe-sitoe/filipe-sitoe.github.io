@@ -50,7 +50,7 @@ export const otherSkills = {
   title: "Other skills",
   text: "Beyond websites and web platforms, I also take on work in these areas.",
   groups: [
-    { label: "Development", items: ["Mobile apps", "Computer vision"] },
+    { label: "Development", items: ["Mobile apps", "Computer vision systems"] },
     { label: "Design", items: ["Graphic design", "Technical drawing", "Presentation design"] },
   ],
 };
