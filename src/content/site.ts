@@ -44,3 +44,13 @@ export const disciplines = [
     ],
   },
 ];
+
+/** Shown below the disciplines in "What I do". Add more areas to a group's `items`. */
+export const otherSkills = {
+  title: "Other skills",
+  text: "Beyond websites and web platforms, I also take on work in these areas.",
+  groups: [
+    { label: "Development", items: ["Mobile apps", "Computer vision"] },
+    { label: "Design", items: ["Graphic design", "Technical drawing", "Presentation design"] },
+  ],
+};

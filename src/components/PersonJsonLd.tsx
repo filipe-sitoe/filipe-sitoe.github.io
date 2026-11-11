@@ -1,5 +1,5 @@
 import portrait from "@/assets/hero/coder.webp";
-import { disciplines, site } from "@/content/site";
+import { disciplines, otherSkills, site } from "@/content/site";
 import { siteUrl } from "@/lib/site-url";
 
 /** Structured data (schema.org/Person) for search engines. */
@@ -14,7 +14,10 @@ export function PersonJsonLd() {
     image: `${siteUrl}${portrait.src}`,
     email: `mailto:${site.email}`,
     address: { "@type": "PostalAddress", addressLocality: "Maputo", addressCountry: "MZ" },
-    knowsAbout: disciplines.flatMap((discipline) => discipline.groups.flatMap((group) => group.items)),
+    knowsAbout: [
+      ...disciplines.flatMap((discipline) => discipline.groups.flatMap((group) => group.items)),
+      ...otherSkills.groups.flatMap((group) => group.items),
+    ],
     sameAs: [site.linkedin],
   };
 
